@@ -7,12 +7,56 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Шапка з назвою -->
-    <!-- Форма відмітки поточного настрою -->
-    <!-- Блок історії записів за датами -->
-    <!-- Блок простої статистики -->
-    <!-- Підвал -->
-    
+    <header>
+        <h1>Трекер настрою</h1>
+    </header>
+
+    <main>
+        <section id="add-entry">
+            <h2>Відмітити настрій</h2>
+            <form action="#" method="post">
+                <div>
+                    <label for="mood-select">Виберіть ваш настрій:</label>
+                    <select id="mood-select" name="mood">
+                        <option value="happy">Радісний</option>
+                        <option value="calm">Спокійний</option>
+                        <option value="sad">Сумний</option>
+                        <option value="anxious">Тривожний</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="note">Замітка:</label>
+                    <textarea id="note" name="note" rows="3"></textarea>
+                </div>
+                <button type="submit">Зберегти</button>
+            </form>
+        </section>
+
+        <section id="history">
+            <h2>Історія записів</h2>
+            <article>
+                <h3>24 жовтня 2026</h3>
+                <p>Настрій: Спокійний</p>
+                <p>Замітка: Плідно попрацював над практичною роботою.</p>
+            </article>
+            <article>
+                <h3>23 жовтня 2026</h3>
+                <p>Настрій: Радісний</p>
+                <p>Замітка: Чудова погода для прогулянки.</p>
+            </article>
+        </section>
+    </main>
+
+    <aside>
+        <h2>Статистика</h2>
+        <p>Загальна кількість записів: 2</p>
+        <p>Найчастіший настрій: Спокійний</p>
+    </aside>
+
+    <footer>
+        <p>&copy; 2026 Навчальний проект. Авторство збережено.</p>
+    </footer>
+
     <script src="js/app.js"></script>
 </body>
 </html>
