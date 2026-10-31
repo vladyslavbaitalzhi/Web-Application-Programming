@@ -19,15 +19,16 @@
                     <div>
                         <label for="mood-select">Виберіть ваш настрій:</label>
                         <select id="mood-select" name="mood">
+                            <option value="awesome">Чудовий</option>
                             <option value="happy">Радісний</option>
-                            <option value="calm">Спокійний</option>
+                            <option value="calm" selected>Спокійний</option>
                             <option value="sad">Сумний</option>
                             <option value="anxious">Тривожний</option>
                         </select>
                     </div>
                     <div>
                         <label for="note">Замітка:</label>
-                        <textarea id="note" name="note" rows="3"></textarea>
+                        <textarea id="note" name="note" rows="3" placeholder="Опишіть, як минув день..."></textarea>
                     </div>
                     <button type="submit">Зберегти</button>
                 </form>
@@ -36,24 +37,61 @@
             <section id="history">
                 <h2>Історія записів</h2>
                 <div class="cards">
-                    <article class="card">
-                        <h3>24 жовтня 2026</h3>
-                        <p>Настрій: Спокійний</p>
-                        <p>Замітка: Плідно попрацював над практичною роботою.</p>
+                    <article class="card mood--calm">
+                        <header class="card__header">
+                            <h3>24 жовтня 2026</h3>
+                            <span class="mood-badge mood--calm">
+                                <span class="mood-dot"></span>
+                                Спокійний
+                            </span>
+                        </header>
+                        <p class="card__note">Замітка: Плідно попрацював над практичною роботою.</p>
                     </article>
-                    <article class="card">
-                        <h3>23 жовтня 2026</h3>
-                        <p>Настрій: Радісний</p>
-                        <p>Замітка: Чудова погода для прогулянки.</p>
+                    <article class="card mood--happy">
+                        <header class="card__header">
+                            <h3>23 жовтня 2026</h3>
+                            <span class="mood-badge mood--happy">
+                                <span class="mood-dot"></span>
+                                Радісний
+                            </span>
+                        </header>
+                        <p class="card__note">Замітка: Чудова погода для прогулянки.</p>
                     </article>
                 </div>
             </section>
         </main>
 
         <aside>
-            <h2>Підсумок</h2>
-            <p>Загальна кількість записів: 2</p>
-            <p>Найчастіший настрій: Спокійний</p>
+            <section class="aside-block">
+                <h2>Підсумок</h2>
+                <p>Загальна кількість записів: 2</p>
+                <p>Найчастіший настрій: Спокійний</p>
+            </section>
+            <section class="aside-block">
+                <h2>Шкала настрою</h2>
+                <ul class="mood-scale">
+                    <li class="mood-scale__item">
+                        <span class="mood-dot mood-dot--awesome"></span>
+                        <span class="mood-scale__name">Чудовий</span>
+                    </li>
+                    <li class="mood-scale__item">
+                        <span class="mood-dot mood-dot--happy"></span>
+                        <span class="mood-scale__name">Радісний</span>
+                    </li>
+                    <li class="mood-scale__item">
+                        <span class="mood-dot mood-dot--calm"></span>
+                        <span class="mood-scale__name">Спокійний</span>
+                    </li>
+                    <li class="mood-scale__item">
+                        <span class="mood-dot mood-dot--sad"></span>
+                        <span class="mood-scale__name">Сумний</span>
+                    </li>
+                    <li class="mood-scale__item">
+                        <span class="mood-dot mood-dot--anxious"></span>
+                        <span class="mood-scale__name">Тривожний</span>
+                    </li>
+                </ul>
+            </section>
         </aside>
     </div>
 
