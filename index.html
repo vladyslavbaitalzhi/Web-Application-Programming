@@ -37,26 +37,10 @@
 
             <section id="history">
                 <h2>Історія записів</h2>
-                <div class="cards">
-                    <article class="card mood--calm">
-                        <header class="card__header">
-                            <h3>24 жовтня 2026</h3>
-                            <span class="mood-badge mood--calm">
-                                <span class="mood-dot"></span>
-                                Спокійний
-                            </span>
-                        </header>
-                        <p class="card__note">Замітка: Плідно попрацював над практичною роботою.</p>
-                    </article>
-                    <article class="card mood--happy">
-                        <header class="card__header">
-                            <h3>23 жовтня 2026</h3>
-                            <span class="mood-badge mood--happy">
-                                <span class="mood-dot"></span>
-                                Радісний
-                            </span>
-                        </header>
-                        <p class="card__note">Замітка: Чудова погода для прогулянки.</p>
+                <div id="mood-history" class="cards">
+                    <article class="card">
+                        <h3>24 жовтня 2026</h3>
+                        <p>Замітка: Плідно попрацював над практичною роботою.</p>
                     </article>
                 </div>
             </section>
@@ -65,7 +49,7 @@
         <aside>
             <section class="aside-block">
                 <h2>Підсумок</h2>
-                <p>Загальна кількість записів: 2</p>
+                <p id="avg-mood">Середній настрій: -</p>
                 <p>Найчастіший настрій: Спокійний</p>
             </section>
             <section class="aside-block">

@@ -1,56 +1,58 @@
-// Перевірка підключення файлу
 console.log('script.js підключено');
 
-// Оголошення даних варіанта (масив записів із полями date та mood)
 const moodEntries = [
-    { date: '2026-10-19', mood: 4 },
-    { date: '2026-10-20', mood: 5 },
-    { date: '2026-10-21', mood: 3 },
-    { date: '2026-10-22', mood: 2 },
-    { date: '2026-10-23', mood: 4 },
-    { date: '2026-10-24', mood: 4 },
-    { date: '2026-10-25', mood: 5 }
+    { date: '2026-10-19', mood: 4, note: 'Продуктивний робочий день, гарний настрій.' },
+    { date: '2026-10-20', mood: 5, note: 'Чудовий вечір із друзями, багато позитиву.' },
+    { date: '2026-10-21', mood: 3, note: 'Звичайний спокійний день без особливих подій.' },
+    { date: '2026-10-22', mood: 2, note: 'Втома та погана погода, відчувався смуток.' },
+    { date: '2026-10-23', mood: 4, note: 'Вдалося завершити складне завдання, задоволений.' },
+    { date: '2026-10-24', mood: 4, note: 'Плідно попрацював над практичною роботою.' },
+    { date: '2026-10-25', mood: 5, note: 'Чудовий вихідний день на природі.' }
 ];
 
-// Стрілкова функція, що повертає текстову назву рівня настрою за його числовою оцінкою (1-5)
-const moodToLabel = mood => {
-    if (mood === 5) return 'Чудовий';
-    if (mood === 4) return 'Радісний';
-    if (mood === 3) return 'Спокійний';
-    if (mood === 2) return 'Сумний';
-    if (mood === 1) return 'Тривожний';
-    return 'Невідомо';
-};
+const listContainer = document.querySelector('#mood-history');
 
-// Функція для обчислення середнього настрою циклом for та класифікації періоду за допомогою if/else
-function calculateAverageMood(entries) {
-    let sum = 0;
-
-    // Цикл for: перебір елементів масиву та накопичення суми
-    for (let i = 0; i < entries.length; i++) {
-        const entry = entries[i];
-        sum += entry.mood;
-        console.log(`Дата: ${entry.date} | Оцінка: ${entry.mood} (${moodToLabel(entry.mood)})`);
-    }
-
-    const average = sum / entries.length;
-    console.log(`Середній бал настрою за період: ${average.toFixed(2)}`);
-
-    // Умовна конструкція if/else для класифікації результату
-    if (average >= 3.5) {
-        console.log('Класифікація періоду: «гарний тиждень»');
-    } else {
-        console.log('Класифікація періоду: «важкий тиждень»');
-    }
-
-    return average;
+const staticCard = document.querySelector('#mood-history .card');
+if (staticCard) {
+    staticCard.remove();
 }
 
-// Демонстрація роботи стрілкової функції moodToLabel
-console.log('--- Перевірка роботи функції moodToLabel ---');
-console.log(`Оцінка 5: ${moodToLabel(5)}`);
-console.log(`Оцінка 2: ${moodToLabel(2)}`);
+const moodToLabel = mood => (mood >= 4 ? 'good' : 'hard');
 
-// Виклик основної функції аналізу даних
-console.log('--- Аналіз записів трекера настрою ---');
-calculateAverageMood(moodEntries);
+function calculateAverageMood(entries) {
+    let sum = 0;
+    for (let i = 0; i < entries.length; i++) {
+        sum += entries[i].mood;
+    }
+    return sum / entries.length;
+}
+
+function renderMoodHistory(entries) {
+    listContainer.innerHTML = '';
+
+    entries.forEach(entry => {
+        const card = document.createElement('article');
+        card.classList.add('card');
+
+        const title = document.createElement('h3');
+        title.textContent = entry.date;
+
+        const note = document.createElement('p');
+        note.textContent = entry.note;
+
+        card.append(title, note);
+
+        card.dataset.mood = entry.mood;
+        card.classList.add(moodToLabel(entry.mood));
+
+        listContainer.append(card);
+    });
+}
+
+renderMoodHistory(moodEntries);
+
+const avgMoodElement = document.querySelector('#avg-mood');
+if (avgMoodElement) {
+    const avg = calculateAverageMood(moodEntries);
+    avgMoodElement.textContent = `Середній настрій: ${avg.toFixed(2)}`;
+}

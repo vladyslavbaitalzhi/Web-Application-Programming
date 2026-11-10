@@ -138,6 +138,14 @@ form button:hover {
     padding: 16px;
 }
 
+.card.good {
+    border-left-color: var(--mood-awesome);
+}
+
+.card.hard {
+    border-left-color: var(--mood-sad);
+}
+
 .card.mood--awesome {
     border-left-color: var(--mood-awesome);
 }
