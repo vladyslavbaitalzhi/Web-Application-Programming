@@ -16,20 +16,19 @@
         <main>
             <section id="add-entry">
                 <h2>Відмітити настрій</h2>
-                <form action="#" method="post">
+                <form id="mood-form" action="#" method="post">
                     <div>
-                        <label for="mood-select">Виберіть ваш настрій:</label>
-                        <select id="mood-select" name="mood">
-                            <option value="awesome">Чудовий</option>
-                            <option value="happy">Радісний</option>
-                            <option value="calm" selected>Спокійний</option>
-                            <option value="sad">Сумний</option>
-                            <option value="anxious">Тривожний</option>
-                        </select>
+                        <label for="entry-date">Дата:</label>
+                        <input type="date" id="entry-date" name="date" required>
+                    </div>
+                    <div>
+                        <label for="mood">Оцінка настрою (від 1 до 5):</label>
+                        <input type="number" id="mood" name="mood" min="1" max="5" placeholder="1-5" required>
                     </div>
                     <div>
                         <label for="note">Замітка:</label>
-                        <textarea id="note" name="note" rows="3" placeholder="Опишіть, як минув день..."></textarea>
+                        <textarea id="note" name="note" rows="3" maxlength="200" placeholder="Опишіть, як минув день..."></textarea>
+                        <div id="char-counter" class="char-counter">Залишилося символів: 200</div>
                     </div>
                     <button type="submit">Зберегти</button>
                 </form>
@@ -57,23 +56,23 @@
                 <ul class="mood-scale">
                     <li class="mood-scale__item">
                         <span class="mood-dot mood-dot--awesome"></span>
-                        <span class="mood-scale__name">Чудовий</span>
+                        <span class="mood-scale__name">5 - Чудовий</span>
                     </li>
                     <li class="mood-scale__item">
                         <span class="mood-dot mood-dot--happy"></span>
-                        <span class="mood-scale__name">Радісний</span>
+                        <span class="mood-scale__name">4 - Радісний</span>
                     </li>
                     <li class="mood-scale__item">
                         <span class="mood-dot mood-dot--calm"></span>
-                        <span class="mood-scale__name">Спокійний</span>
+                        <span class="mood-scale__name">3 - Спокійний</span>
                     </li>
                     <li class="mood-scale__item">
                         <span class="mood-dot mood-dot--sad"></span>
-                        <span class="mood-scale__name">Сумний</span>
+                        <span class="mood-scale__name">2 - Сумний</span>
                     </li>
                     <li class="mood-scale__item">
                         <span class="mood-dot mood-dot--anxious"></span>
-                        <span class="mood-scale__name">Тривожний</span>
+                        <span class="mood-scale__name">1 - Тривожний</span>
                     </li>
                 </ul>
             </section>

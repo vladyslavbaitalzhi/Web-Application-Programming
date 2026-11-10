@@ -87,7 +87,9 @@ form label {
 }
 
 form select,
-form textarea {
+form textarea,
+form input[type="date"],
+form input[type="number"] {
     width: 100%;
     padding: 10px 12px;
     font-size: 1rem;
@@ -99,9 +101,18 @@ form textarea {
 }
 
 form select:focus,
-form textarea:focus {
+form textarea:focus,
+form input[type="date"]:focus,
+form input[type="number"]:focus {
     outline: 2px solid var(--primary);
     outline-offset: 1px;
+}
+
+.char-counter {
+    margin-top: 4px;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    text-align: right;
 }
 
 form button {

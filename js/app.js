@@ -1,4 +1,4 @@
-console.log('script.js підключено');
+console.log('app.js підключено');
 
 const moodEntries = [
     { date: '2026-10-19', mood: 4, note: 'Продуктивний робочий день, гарний настрій.' },
@@ -11,6 +11,14 @@ const moodEntries = [
 ];
 
 const listContainer = document.querySelector('#mood-history');
+const moodForm = document.querySelector('#mood-form');
+const dateInput = document.querySelector('#entry-date');
+const moodInput = document.querySelector('#mood');
+const noteInput = document.querySelector('#note');
+const charCounter = document.querySelector('#char-counter');
+const avgMoodElement = document.querySelector('#avg-mood');
+
+const MAX_NOTE_LENGTH = 200;
 
 const staticCard = document.querySelector('#mood-history .card');
 if (staticCard) {
@@ -20,11 +28,19 @@ if (staticCard) {
 const moodToLabel = mood => (mood >= 4 ? 'good' : 'hard');
 
 function calculateAverageMood(entries) {
+    if (entries.length === 0) return 0;
     let sum = 0;
     for (let i = 0; i < entries.length; i++) {
         sum += entries[i].mood;
     }
     return sum / entries.length;
+}
+
+function updateAverageMood() {
+    if (avgMoodElement) {
+        const avg = calculateAverageMood(moodEntries);
+        avgMoodElement.textContent = `Середній настрій: ${avg.toFixed(2)}`;
+    }
 }
 
 function renderMoodHistory(entries) {
@@ -50,9 +66,35 @@ function renderMoodHistory(entries) {
 }
 
 renderMoodHistory(moodEntries);
+updateAverageMood();
 
-const avgMoodElement = document.querySelector('#avg-mood');
-if (avgMoodElement) {
-    const avg = calculateAverageMood(moodEntries);
-    avgMoodElement.textContent = `Середній настрій: ${avg.toFixed(2)}`;
-}
+moodInput.addEventListener('input', () => {
+    const value = Number(moodInput.value);
+    if (moodInput.value !== '' && (value < 1 || value > 5)) {
+        moodInput.setCustomValidity('Оцінка настрою має бути від 1 до 5');
+    } else {
+        moodInput.setCustomValidity('');
+    }
+});
+
+noteInput.addEventListener('input', () => {
+    const remaining = MAX_NOTE_LENGTH - noteInput.value.length;
+    charCounter.textContent = `Залишилося символів: ${remaining}`;
+});
+
+moodForm.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const newEntry = {
+        date: dateInput.value,
+        mood: Number(moodInput.value),
+        note: noteInput.value.trim()
+    };
+
+    moodEntries.push(newEntry);
+    renderMoodHistory(moodEntries);
+    updateAverageMood();
+
+    moodForm.reset();
+    charCounter.textContent = `Залишилося символів: ${MAX_NOTE_LENGTH}`;
+});
