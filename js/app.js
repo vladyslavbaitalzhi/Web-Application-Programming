@@ -1,48 +1,39 @@
 console.log('app.js підключено');
 
-const moodEntries = [
-    { date: '2026-10-19', mood: 4, note: 'Продуктивний робочий день, гарний настрій.' },
-    { date: '2026-10-20', mood: 5, note: 'Чудовий вечір із друзями, багато позитиву.' },
-    { date: '2026-10-21', mood: 3, note: 'Звичайний спокійний день без особливих подій.' },
-    { date: '2026-10-22', mood: 2, note: 'Втома та погана погода, відчувався смуток.' },
-    { date: '2026-10-23', mood: 4, note: 'Вдалося завершити складне завдання, задоволений.' },
-    { date: '2026-10-24', mood: 4, note: 'Плідно попрацював над практичною роботою.' },
-    { date: '2026-10-25', mood: 5, note: 'Чудовий вихідний день на природі.' }
-];
+// Константа URL
+const API_URL = 'https://jsonplaceholder.typicode.com/comments?postId=1';
+const MAX_NOTE_LENGTH = 200;
 
+// Отримання посилань на елементи DOM
 const listContainer = document.querySelector('#mood-history');
+const reloadBtn = document.querySelector('#reload-btn');
+const loadingIndicator = document.querySelector('#loading-indicator');
+const errorMessage = document.querySelector('#error-message');
+
 const moodForm = document.querySelector('#mood-form');
 const dateInput = document.querySelector('#entry-date');
 const moodInput = document.querySelector('#mood');
 const noteInput = document.querySelector('#note');
 const charCounter = document.querySelector('#char-counter');
-const avgMoodElement = document.querySelector('#avg-mood');
 
-const MAX_NOTE_LENGTH = 200;
-
-const staticCard = document.querySelector('#mood-history .card');
-if (staticCard) {
-    staticCard.remove();
+// Керування станом завантаження
+function showLoading(isLoading) {
+    loadingIndicator.hidden = !isLoading;
+    reloadBtn.disabled = isLoading;
 }
 
-const moodToLabel = mood => (mood >= 4 ? 'good' : 'hard');
-
-function calculateAverageMood(entries) {
-    if (entries.length === 0) return 0;
-    let sum = 0;
-    for (let i = 0; i < entries.length; i++) {
-        sum += entries[i].mood;
-    }
-    return sum / entries.length;
+// Керування відображенням помилок
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.hidden = false;
 }
 
-function updateAverageMood() {
-    if (avgMoodElement) {
-        const avg = calculateAverageMood(moodEntries);
-        avgMoodElement.textContent = `Середній настрій: ${avg.toFixed(2)}`;
-    }
+function hideError() {
+    errorMessage.textContent = '';
+    errorMessage.hidden = true;
 }
 
+// Функція рендерингу списку в DOM (виводить поля: name, body, email)
 function renderMoodHistory(entries) {
     listContainer.innerHTML = '';
 
@@ -51,22 +42,49 @@ function renderMoodHistory(entries) {
         card.classList.add('card');
 
         const title = document.createElement('h3');
-        title.textContent = entry.date;
+        title.textContent = entry.name;
 
-        const note = document.createElement('p');
-        note.textContent = entry.note;
+        const body = document.createElement('p');
+        body.classList.add('card__note');
+        body.textContent = entry.body;
 
-        card.append(title, note);
+        const email = document.createElement('small');
+        email.classList.add('card__email');
+        email.textContent = entry.email;
 
-        card.dataset.mood = entry.mood;
-        card.classList.add(moodToLabel(entry.mood));
-
+        card.append(title, body, email);
         listContainer.append(card);
     });
 }
 
-renderMoodHistory(moodEntries);
-updateAverageMood();
+// Отримання записів настрою з API JSONPlaceholder:
+// https://jsonplaceholder.typicode.com/comments?postId=1
+async function loadData() {
+    showLoading(true);
+    hideError();
+
+    try {
+        const response = await fetch(API_URL);
+
+        // Перевірка HTTP-статусу відповіді
+        if (!response.ok) {
+            throw new Error(`Сервер відповів кодом ${response.status}`);
+        }
+
+        const data = await response.json();
+        renderMoodHistory(data);
+    } catch (error) {
+        // Очищення контейнера та виведення тексту помилки згідно з вимогами Варіанта 3
+        listContainer.innerHTML = '';
+        showError('Записи тимчасово недоступні');
+        console.error('Помилка завантаження даних:', error);
+    } finally {
+        showLoading(false);
+    }
+}
+
+// Обробники подій
+reloadBtn.addEventListener('click', loadData);
 
 moodInput.addEventListener('input', () => {
     const value = Number(moodInput.value);
@@ -86,15 +104,31 @@ moodForm.addEventListener('submit', event => {
     event.preventDefault();
 
     const newEntry = {
-        date: dateInput.value,
-        mood: Number(moodInput.value),
-        note: noteInput.value.trim()
+        name: `Запис від ${dateInput.value} (Оцінка: ${moodInput.value}/5)`,
+        body: noteInput.value.trim(),
+        email: 'local-user@example.com'
     };
 
-    moodEntries.push(newEntry);
-    renderMoodHistory(moodEntries);
-    updateAverageMood();
+    const card = document.createElement('article');
+    card.classList.add('card');
+
+    const title = document.createElement('h3');
+    title.textContent = newEntry.name;
+
+    const body = document.createElement('p');
+    body.classList.add('card__note');
+    body.textContent = newEntry.body;
+
+    const email = document.createElement('small');
+    email.classList.add('card__email');
+    email.textContent = newEntry.email;
+
+    card.append(title, body, email);
+    listContainer.prepend(card);
 
     moodForm.reset();
     charCounter.textContent = `Залишилося символів: ${MAX_NOTE_LENGTH}`;
 });
+
+// Початкове завантаження даних при завантаженні сторінки
+loadData();

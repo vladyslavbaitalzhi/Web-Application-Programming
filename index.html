@@ -35,13 +35,18 @@
             </section>
 
             <section id="history">
-                <h2>Історія записів</h2>
-                <div id="mood-history" class="cards">
-                    <article class="card">
-                        <h3>24 жовтня 2026</h3>
-                        <p>Замітка: Плідно попрацював над практичною роботою.</p>
-                    </article>
+                <div class="history-header">
+                    <h2>Історія записів</h2>
+                    <button type="button" id="reload-btn">Оновити</button>
                 </div>
+
+                <!-- Елементи для відображення стану завантаження та помилок -->
+                <div id="loading-indicator" class="status-message status-message--loading" hidden>
+                    Завантаження...
+                </div>
+                <div id="error-message" class="status-message status-message--error" hidden></div>
+
+                <div id="mood-history" class="cards"></div>
             </section>
         </main>
 

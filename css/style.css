@@ -67,6 +67,60 @@ h2 {
     color: var(--text-main);
 }
 
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.history-header h2 {
+    margin-bottom: 0;
+}
+
+#reload-btn {
+    padding: 8px 16px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+#reload-btn:hover:not(:disabled) {
+    background-color: var(--bg-page);
+    border-color: var(--text-muted);
+}
+
+#reload-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.status-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.9375rem;
+}
+
+.status-message--loading {
+    background-color: var(--mood-calm-bg);
+    color: var(--mood-calm);
+    border: 1px solid var(--border-color);
+}
+
+.status-message--error {
+    background-color: var(--mood-anxious-bg);
+    color: var(--mood-anxious);
+    border: 1px solid var(--mood-anxious);
+    font-weight: 500;
+}
+
 form {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -144,104 +198,32 @@ form button:hover {
 .card {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-left: 5px solid var(--border-color);
+    border-left: 5px solid var(--primary);
     border-radius: 14px;
     padding: 16px;
 }
 
-.card.good {
-    border-left-color: var(--mood-awesome);
-}
-
-.card.hard {
-    border-left-color: var(--mood-sad);
-}
-
-.card.mood--awesome {
-    border-left-color: var(--mood-awesome);
-}
-
-.card.mood--happy {
-    border-left-color: var(--mood-happy);
-}
-
-.card.mood--calm {
-    border-left-color: var(--mood-calm);
-}
-
-.card.mood--sad {
-    border-left-color: var(--mood-sad);
-}
-
-.card.mood--anxious {
-    border-left-color: var(--mood-anxious);
-}
-
-.card__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    border: none;
-    padding: 0;
-    background: transparent;
-}
-
-.card__header h3 {
-    margin: 0;
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
     font-size: 1.0625rem;
     font-weight: 600;
     color: var(--text-main);
+    text-transform: capitalize;
 }
 
 .card__note {
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 0.9375rem;
     color: var(--text-muted);
+    line-height: 1.45;
 }
 
-.mood-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
+.card__email {
+    display: block;
     font-size: 0.8125rem;
-    font-weight: 600;
-    border-radius: 20px;
-}
-
-.mood-badge.mood--awesome {
-    background-color: var(--mood-awesome-bg);
-    color: var(--mood-awesome);
-}
-
-.mood-badge.mood--happy {
-    background-color: var(--mood-happy-bg);
-    color: var(--mood-happy);
-}
-
-.mood-badge.mood--calm {
-    background-color: var(--mood-calm-bg);
-    color: var(--mood-calm);
-}
-
-.mood-badge.mood--sad {
-    background-color: var(--mood-sad-bg);
-    color: var(--mood-sad);
-}
-
-.mood-badge.mood--anxious {
-    background-color: var(--mood-anxious-bg);
-    color: var(--mood-anxious);
-}
-
-.mood-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: currentColor;
-    flex-shrink: 0;
+    color: var(--primary);
+    word-break: break-all;
 }
 
 aside {
@@ -292,6 +274,14 @@ aside {
     height: 12px;
 }
 
+.mood-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex-shrink: 0;
+}
+
 .mood-dot--awesome {
     background-color: var(--mood-awesome);
     color: var(--mood-awesome);
@@ -337,10 +327,6 @@ footer p {
 @media (min-width: 600px) {
     .layout {
         max-width: 768px;
-    }
-
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
     }
 }
 
